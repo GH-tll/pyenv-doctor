@@ -1,0 +1,115 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
+temp/
+tmp/
+
+# ===========================================
+# 敏感信息和个人配置（禁止公开）
+# ===========================================
+
+# PyPI Token 配置文件（绝对禁止）
+.pypirc
+.pypirc.template
+*.pypirc
+
+# PyPI 恢复代码（包含敏感信息，绝对禁止）
+docs/PyPI/*.txt
+*-Recovery-Codes-*.txt
+
+# 历史版本文档（禁止公开）
+docs/prd_bak/
+
+# 本地环境配置文件
+.local.env
+.env.local
+*.local
+
+# 个人脚本和工具
+scripts/local/
+tools/personal/
+
+# 测试数据和个人配置
+test_data/
+fixtures/
+*.bak
+*.backup
+
+# ===========================================
+# 建议公开的文档（公开仓库有价值）
+# ===========================================
+# docs/*.md - 技术文档和报告
+# docs/prd/ - 产品需求文档
+# docs/sdd/ - 系统设计文档
+# 这些对项目有参考价值，应该保留
