@@ -92,7 +92,7 @@ docs/PyPI/*.txt
 docs/*审计*.md
 docs/*audit*.md
 docs/*终验*.md
-
+docs/other
 # 历史版本文档（禁止公开）
 docs/prd_bak/
 
