@@ -76,7 +76,7 @@ pyenv-doctor/
 ### 2.1 进入项目目录
 
 ```powershell
-cd D:\tll\AI_Projects\JavaTestGen\pyenv-doctor
+cd pyenv-doctor
 ```
 
 ### 2.2 修改版本号（如需）
@@ -160,7 +160,7 @@ Remove-Item src\pyenv_doctor.egg-info\ -Recurse -Force -ErrorAction SilentlyCont
 
 ```powershell
 # 确保在项目目录
-cd D:\tll\AI_Projects\JavaTestGen\pyenv-doctor
+cd pyenv-doctor
 
 # 执行构建
 python -m build
@@ -238,10 +238,10 @@ python -m zipfile -l dist\pyenv_doctor-x.x.x-py3-none-any.whl | Select-String "c
 
 ```powershell
 # 步骤 1：进入项目目录
-cd D:\tll\AI_Projects\JavaTestGen\pyenv-doctor
+cd pyenv-doctor
 
 # 步骤 2：上传到 TestPyPI
-twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "你的TestPyPI_Token" dist\*
+twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "你的 TestPyPI_Token" dist\*
 ```
 
 **参数说明**：
@@ -289,10 +289,10 @@ https://test.pypi.org/project/pyenv-doctor/0.1.1/
 
 ```powershell
 # 步骤 1：进入项目目录
-cd D:\tll\AI_Projects\JavaTestGen\pyenv-doctor
+cd pyenv-doctor
 
 # 步骤 2：上传到 PyPI
-twine upload -u __token__ -p "你的正式PyPI_Token" dist\*
+twine upload -u __token__ -p "你的正式 PyPI_Token" dist\*
 ```
 
 ### 6.3 预期输出
@@ -560,7 +560,7 @@ twine --version
 
 ```powershell
 # 进入项目目录
-cd D:\tll\AI_Projects\JavaTestGen\pyenv-doctor
+cd pyenv-doctor
 
 # 清理旧构建
 Remove-Item build\ -Recurse -Force -ErrorAction SilentlyContinue
