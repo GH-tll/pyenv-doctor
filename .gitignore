@@ -88,6 +88,11 @@ tmp/
 docs/PyPI/*.txt
 *-Recovery-Codes-*.txt
 
+# 质量审计报告（内部文档，禁止公开）
+docs/*审计*.md
+docs/*audit*.md
+docs/*终验*.md
+
 # 历史版本文档（禁止公开）
 docs/prd_bak/
 

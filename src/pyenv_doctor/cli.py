@@ -13,7 +13,7 @@ from .agents import EnvScanner, ConflictSolver, SandboxExecutor
 
 
 @click.group()
-@click.version_option(version="0.1.3", prog_name="pyenv-doctor")
+@click.version_option(version="0.1.4", prog_name="pyenv-doctor-tool")
 def main():
     """
     PyEnv Doctor - Python 环境诊断与沙箱预演工具
