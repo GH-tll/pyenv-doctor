@@ -33,6 +33,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 测试场景 2：requests + urllib3 冲突（正式 PyPI）
 - 所有测试通过，自动修复功能正常工作
 
+## [1.1.8] - 2026-05-02
+
+### Fixed
+- **版本范围解析修复**: 正确解析复杂版本约束（如 `asgiref<4,>=3.6.0`）
+- **自动修复包名修复**: 从建议中提取正确的包名（而非冲突包名）
+- **快照空值处理**: 当跳过快照创建时的 `NoneType` 错误
+
+### Technical Details
+- 修复 `src/pyenv_doctor/agents/conflict_solver.py` 中的 `_generate_suggestion` 方法，实现综合分析所有版本约束条件
+- 修复 `src/pyenv_doctor/repair/strategy.py` 中的 `generate_repair_plan` 方法，从 suggestion 中提取正确包名
+- 修复 `src/pyenv_doctor/cli/main.py` 中的快照空值检查，添加友好的错误提示
+
+### Testing
+- 测试场景 1：django + asgiref 冲突（test PyPI）
+- 测试场景 2：requests + urllib3 冲突（正式 PyPI）
+- 所有测试通过，自动修复功能正常工作
+
 ## [1.1.3] - 2026-04-26
 
 ### Added

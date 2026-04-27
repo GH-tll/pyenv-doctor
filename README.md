@@ -79,7 +79,7 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 python --version
 
 # 2. 安装工具（从 TestPyPI 安装最新版）
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ pyenv-doctor-tool==1.1.3
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ pyenv-doctor-tool==1.1.8
 
 # 3. 验证安装
 pyenv-doctor --version
@@ -242,8 +242,8 @@ pip uninstall pyenv-doctor-tool -y
 **安装测试环境版本（最新功能）：**
 
 ```bash
-# 安装 TestPyPI 上的 1.1.3 版本
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ pyenv-doctor-tool==1.1.3
+# 安装 TestPyPI 上的 1.1.8 版本
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ pyenv-doctor-tool==1.1.8
 ```
 
 **安装正式环境版本（稳定版）：**
@@ -257,7 +257,7 @@ pip install pyenv-doctor-tool
 
 ```bash
 pyenv-doctor --version
-# 预期输出：pyenv-doctor-tool, version 1.1.3
+# 预期输出：pyenv-doctor-tool, version 1.1.8
 ```
 
 #### 步骤 5：更新到最新版本
@@ -1299,7 +1299,37 @@ PermissionError: [Errno 13] Permission denied
 
 ## 版本历史
 
-### v1.1.3 (当前版本)
+### v1.1.8 (TestPyPI 最新版)
+
+**发布日期**: 2026-05-02
+
+**修复内容：**
+- 版本范围解析修复：正确解析复杂版本约束（如 `<4,>=3.6.0`）
+- 自动修复包名修复：从建议中提取正确的包名进行修复
+- 错误处理优化：快照为空时的友好提示
+
+**技术细节：**
+- 修复 `conflict_solver.py` 中的 `_generate_suggestion` 方法
+- 修复 `strategy.py` 中的 `generate_repair_plan` 方法
+- 修复 `main.py` 中的快照空值检查
+
+### v0.1.5 (正式 PyPI 稳定版)
+
+**发布日期**: 2026-05-02
+
+**新增功能：**
+- 完整的依赖冲突自动修复功能
+- 智能诊断依赖冲突
+- 沙箱预演修复方案
+- 自动执行修复命令
+- 修复后自动验证
+
+**优化改进：**
+- 版本范围解析修复：正确解析复杂版本约束
+- 自动修复包名修复：从建议中提取正确的包名
+- 错误处理优化：快照为空时的友好提示
+
+### v1.1.3
 
 **发布日期**: 2026-04-26
 
@@ -1378,6 +1408,8 @@ PermissionError: [Errno 13] Permission denied
 - [x] 自动修复功能（v1.1.0）
 - [x] 环境快照管理（v1.1.0）
 - [x] 回滚引擎（v1.1.0）
+- [x] 快速模式（v1.1.3）
+- [x] 版本范围解析修复（v1.1.8）
 - [ ] LLM 集成（自然语言诊断）
 - [ ] Web 界面（可视化）
 - [ ] 批量模式（多环境对比）
