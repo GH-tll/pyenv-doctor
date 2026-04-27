@@ -196,8 +196,8 @@ class TestEnvScanner:
         """
         ES-E01: 元数据损坏
 
-        前置条件: 模拟包元数据损坏
-        预期结果: 跳过损坏包，返回其他包列表
+        前置条件：包元数据损坏
+        预期结果：跳过损坏包，返回其他包列表
         """
         with patch("pyenv_doctor.agents.env_scanner.distributions") as mock_distributions:
             # 模拟损坏的包
@@ -216,6 +216,7 @@ class TestEnvScanner:
             scanner = EnvScanner()
             result = scanner.scan()
             # 应该跳过损坏的包，只返回正常的包
+            # 注意：mock_dist1 会因为 version 抛出异常而被跳过
             assert len(result) == 1
             assert result[0].name == "normal_package"
 

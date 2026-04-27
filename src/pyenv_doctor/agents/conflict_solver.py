@@ -120,40 +120,78 @@ class ConflictSolver:
             >>> print(suggestion)
             "numpy==1.23.5"
         """
-        # 遍历约束，寻找合适的版本
+        # FIX-版本范围解析：综合分析所有约束，找到满足条件的版本
+        # 收集所有约束条件
+        min_version = None  # 最低版本（>= 或 >）
+        max_version = None  # 最高版本（<= 或 <）
+        exact_version = None  # 精确版本（==）
+        
         for spec in specifier:
-            # 对于 < 约束，建议安装约束版本的前一个版本
-            if spec.operator == "<":
-                # 简化处理：直接使用约束版本
-                # 实际应该查找 PyPI 获取最新兼容版本
-                return f"{name}=={spec.version}"
-
-            # 对于 <= 约束，建议安装约束版本
-            elif spec.operator == "<=":
-                return f"{name}=={spec.version}"
-
-            # 对于 > 约束，建议安装约束版本的下一个版本
+            if spec.operator == ">=":
+                if min_version is None or Version(spec.version) > min_version:
+                    min_version = Version(spec.version)
             elif spec.operator == ">":
-                # 简化处理：直接使用约束版本
-                return f"{name}=={spec.version}"
-
-            # 对于 >= 约束，建议安装约束版本
-            elif spec.operator == ">=":
-                return f"{name}=={spec.version}"
-
-            # 对于 == 约束，建议安装约束版本
+                # > 需要比该版本更高，所以最低版本是 spec.version + 微小增量
+                # 简化处理：直接使用 spec.version 作为下限参考
+                if min_version is None or Version(spec.version) >= min_version:
+                    min_version = Version(spec.version)
+            elif spec.operator == "<=":
+                if max_version is None or Version(spec.version) < max_version:
+                    max_version = Version(spec.version)
+            elif spec.operator == "<":
+                # < 需要比该版本更低，所以最高版本是 spec.version - 微小增量
+                # 简化处理：直接使用 spec.version 作为上限参考
+                if max_version is None or Version(spec.version) <= max_version:
+                    max_version = Version(spec.version)
             elif spec.operator == "==":
-                return f"{name}=={spec.version}"
-
-            # 对于 != 约束，建议安装其他版本
-            elif spec.operator == "!=":
-                # 简化处理：建议安装一个接近的版本
-                # 由于无法确定具体版本，使用一个占位版本
-                return f"{name}==1.0.0"
-
-            # 对于 ~= 约束，建议安装兼容版本
+                exact_version = Version(spec.version)
+                break  # 精确约束优先级最高
             elif spec.operator == "~=":
-                return f"{name}=={spec.version}"
-
-        # 默认返回通用建议
+                # ~= 是兼容版本约束，如 ~=1.4.2 等价于 >=1.4.2, ==1.4.*
+                # 简化处理：使用该版本作为最低版本
+                if min_version is None or Version(spec.version) > min_version:
+                    min_version = Version(spec.version)
+        
+        # 根据收集的约束生成建议
+        if exact_version:
+            # 有精确约束，直接使用
+            return f"{name}=={exact_version}"
+        
+        if min_version is not None and max_version is not None:
+            # 同时有上下限约束
+            if min_version < max_version:
+                # 有效范围，使用最低版本（保守策略）
+                return f"{name}=={min_version}"
+            else:
+                # 约束冲突，返回错误
+                self.logger.warning(
+                    f"约束冲突：{name} 需要 >={min_version} 且 <{max_version}"
+                )
+                return f"{name} (conflicting constraints)"
+        
+        if min_version is not None:
+            # 只有最低约束，使用最低版本
+            return f"{name}=={min_version}"
+        
+        if max_version is not None:
+            # 只有最高约束，需要找一个低于最高版本的版本
+            # 简化处理：返回 max_version - 0.0.1（如果可能）
+            # 对于主要版本号，直接减 1
+            try:
+                version_parts = str(max_version).split('.')
+                if len(version_parts) >= 1:
+                    major = int(version_parts[0])
+                    if major > 0:
+                        # 构造一个低于 max 的版本
+                        if len(version_parts) == 1:
+                            return f"{name}=={major - 1}"
+                        elif len(version_parts) == 2:
+                            return f"{name}=={major - 1}.{version_parts[1]}"
+                        else:
+                            return f"{name}=={major - 1}.{version_parts[1]}.{version_parts[2]}"
+            except Exception:
+                pass
+            return f"{name}<{max_version}"
+        
+        # 无有效约束，返回通用建议
         return f"{name} (compatible version)"

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyenv-doctor-tool"
-version = "0.1.4"
+version = "0.1.5"
 description = "Python environment diagnosis and sandbox preview tool"
 readme = "README.md"
 license = "MIT"
@@ -47,6 +47,8 @@ dev = [
     "pytest-cov>=4.0",
     "build>=0.10.0",
     "twine>=4.0.0",
+    "pytest-asyncio>=0.21.0,<0.24.0",
+    "pytest-timeout>=2.0.0",
 ]
 
 [tool.setuptools.packages.find]
@@ -57,7 +59,9 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --timeout=60"
+asyncio_mode = "strict"
+timeout = 60
 
 [tool.coverage.run]
 source = ["src/pyenv_doctor"]
